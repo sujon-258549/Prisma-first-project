@@ -6,9 +6,13 @@ export const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(httpStatus.BAD_REQUEST).json({
-    success: false,
-    message: err.name,
-    err: err,
-  });
+  try {
+    res.status(httpStatus.BAD_REQUEST).json({
+      success: false,
+      message: err.name,
+      err: err,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
