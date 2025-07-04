@@ -1,13 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  // output   = ".src/generated/prisma"
-  // output   = "./src/generated/prisma"
 }
 
 datasource db {
@@ -15,15 +7,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model DiplomaTeacher {
+  id               String      @id @default(uuid())
+  name             String
+  fatherName       String
+  motherName       String
+  gender           Gender
+  dateOfBirth      DateTime
+  bloodGroup       BloodGroup?
+  phoneNumber      String      @unique
+  email            String      @unique
+  password         String
+  emergencyContact String?
+  presentAddress   String
+  permanentAddress String
 
-model Post {
-  id String @id @default(uuid())
-  title String
-  content String?
-  published Boolean @default(false)
-  author String
+  teacherId   String           @unique
+  role        Role
+  status      EmploymentStatus
+  joiningDate DateTime
+  designation Designation
+  department  String
+
+  trainingCompleted  Boolean
+  teachingSubject    String?
+  nidNumber          String?
+  birthCertificateNo String?
+  nationality        String
+  religion           String
+  maritalStatus      MaritalStatus
+  group              Group? // A, B, or C
+
+  photoUrl     String? // URI to photo
+  signatureUrl String? // URI to signature
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
 
-  @@map("posts")
+enum BloodGroup {
+  A_POS
+  A_NEG
+  B_POS
+  B_NEG
+  AB_POS
+  AB_NEG
+  O_POS
+  O_NEG
+}
+
+enum MaritalStatus {
+  MARRIED
+  UNMARRIED
+  DIVORCED
+  WIDOWED
+}
+
+enum Role {
+  ADMIN
+  SUPPER_ADMIN
+  FACULTY
+  STUDENT
+}
+
+enum Group {
+  A_GROUP
+  B_GROUP
+  C_GROUP
+  D_GROUP
+}
+
+enum EmploymentStatus {
+  ACTIVE
+  INACTIVE
+  ON_LEAVE
+  RETIRED
+  RESIGNED
+}
+
+enum Designation {
+  LECTURER
+  INSTRUCTOR
+  SENIOR_INSTRUCTOR
+  HEAD_OF_DEPARTMENT
+  VICE_PRINCIPAL
+  PRINCIPAL
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
