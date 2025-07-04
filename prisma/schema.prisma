@@ -43,6 +43,8 @@ model DiplomaTeacher {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("teacher")
 }
 
 enum BloodGroup {
