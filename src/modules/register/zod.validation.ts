@@ -44,3 +44,41 @@ export const diplomaTeacherZodSchema = z.object({
         signatureUrl: z.string().url().optional(),
     })
 });
+
+
+
+export const diplomaStudentZodSchema = z.object({
+    body: z.object({
+        name: z.string().min(1),
+        fatherName: z.string().min(1),
+        motherName: z.string().min(1),
+        dateOfBirth: z.string().datetime().or(z.date()), // Date or ISO String
+        gender: z.enum(["MALE", "FEMALE", "OTHER"]),
+        bloodGroup: z.enum([
+            "A_POS", "A_NEG",
+            "B_POS", "B_NEG",
+            "AB_POS", "AB_NEG",
+            "O_POS", "O_NEG"
+        ]),
+        phoneNumber: z.string().min(11),
+        email: z.string().email(),
+        presentAddress: z.string().min(1),
+        permanentAddress: z.string().min(1),
+        instituteName: z.string().min(1),
+        department: z.string().min(1),
+        semester: z.number().int().min(1),
+        registrationNo: z.string().min(1),
+        rollNo: z.string().min(1),
+        gpa: z.number().min(0).max(4).optional(),
+        passingYear: z.number().int().optional(),
+
+        classTenSchoolName: z.string().min(1),
+        classTenBoard: z.string().min(1),
+        classTenGroup: z.string().min(1),
+        classTenRollNo: z.string().min(1),
+        classTenRegistrationNo: z.string().min(1),
+        classTenGPA: z.number().min(0).max(5),
+        classTenExamYear: z.number().int()
+    })
+});
+

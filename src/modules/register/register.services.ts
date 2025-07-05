@@ -1,4 +1,4 @@
-import { DiplomaTeacher } from "@prisma/client";
+import { DiplomaStudent, DiplomaTeacher } from "@prisma/client";
 import * as argon2 from "argon2";
 import config from "../../config";
 import prisma from "../../utility/prismaclinet";
@@ -13,9 +13,17 @@ const createTeacherIntoDB = async (payload: DiplomaTeacher) => {
   });
   return result
 };
+const createStudentIntoDB = async (payload: DiplomaStudent) => {
+  const result = await prisma.diplomaStudent.create({
+    data: {
+      ...payload
+    }
+  });
+  return result
+};
 
-console.log("hello there")
 
 export const registerServices = {
   createTeacherIntoDB,
+  createStudentIntoDB
 };

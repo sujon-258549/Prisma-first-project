@@ -14,7 +14,17 @@ const createTeacher = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const createStudent = catchAsync(async (req: Request, res: Response) => {
+  const result = await registerServices.createStudentIntoDB(req.body);
+  sendResponse(res, {
+    statusCode: httpsStatus.CREATED,
+    success: true,
+    message: "Student create Successfully",
+    data: result,
+  });
+});
 
 export const registerController = {
   createTeacher,
+  createStudent
 };
