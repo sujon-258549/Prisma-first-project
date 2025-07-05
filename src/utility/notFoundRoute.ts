@@ -8,7 +8,7 @@ export const notFoundRoute = (
 ) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
-    message: "Not Found",
+    message: "Router Not Found",
     error: {
       path: req.originalUrl,
     },

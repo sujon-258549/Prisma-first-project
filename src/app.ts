@@ -6,6 +6,7 @@ import { globalErrorHandler } from "./modules/middleware/globalErrorHandler";
 import { mainRouter } from "./router/indes";
 
 app.use(cors());
+app.use(express.json())
 app.get("/", (req: Request, res: Response) => {
   res.send("Diploma student management project");
 });

@@ -1,7 +1,7 @@
 import { DiplomaTeacher } from "@prisma/client";
 
 const createTeacherIntoDB = async (payload: DiplomaTeacher) => {
-  console.log(payload);
+return payload
 };
 
 export const registerServices = {
