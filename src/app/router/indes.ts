@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { RegisterRouter } from "../modules/register/register.router";
+import { authRTouter } from "../modules/auth/auth.router";
 
 const router = Router();
 
@@ -7,6 +8,10 @@ const allRouter = [
   {
     path: "/register",
     router: RegisterRouter,
+  },
+  {
+    path: "/auth",
+    router: authRTouter,
   },
 ];
 

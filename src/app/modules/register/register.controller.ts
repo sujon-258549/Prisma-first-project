@@ -2,7 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from "express";
 import { registerServices } from "./register.services";
 import { sendResponse } from "../../utility/sendResponse";
 import httpsStatus from "http-status-codes";
-import { catchAsync } from "../middleware/catchAsync";
+import { catchAsync } from "../../middleware/catchAsync";
 
 
 const createTeacher = catchAsync(async (req: Request, res: Response) => {

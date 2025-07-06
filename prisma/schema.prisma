@@ -7,29 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  password       String
+  role           Role
+  isDelete Boolean @default(false)
+  diplomaTeacher DiplomaTeacher?
+
+  @@map("users")
+}
+
 model DiplomaTeacher {
   id               String      @id @default(uuid())
   name             String
+  email            String      @unique
   fatherName       String
   motherName       String
   gender           Gender
   dateOfBirth      DateTime
   bloodGroup       BloodGroup?
   phoneNumber      String      @unique
-  email            String      @unique
-  password         String
   emergencyContact String?
   presentAddress   String
   permanentAddress String
 
   teacherId   String           @unique
-  role        Role
-  status      EmploymentStatus
+  status      EmploymentStatus @default(ACTIVE)
   joiningDate DateTime
   designation Designation
   department  String
 
-  trainingCompleted  Boolean
+  trainingCompleted  Boolean       @default(false)
   teachingSubject    String?
   nidNumber          String?
   birthCertificateNo String?
@@ -40,32 +49,32 @@ model DiplomaTeacher {
 
   photoUrl     String? // URI to photo
   signatureUrl String? // URI to signature
-
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  ClassTest ClassTest[]
+  isDeleted    Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  classTest    ClassTest[]
+  user         User        @relation(fields: [email], references: [email])
 
   @@map("teacher")
 }
 
 model DiplomaStudent {
-  id                     String     @id @default(uuid())
+  id                     String           @id @default(uuid())
   name                   String
   fatherName             String
   motherName             String
   dateOfBirth            DateTime
   gender                 String
   bloodGroup             BloodGroup
-  phoneNumber            String     @unique
-  email                  String     @unique
+  phoneNumber            String           @unique
+  email                  String           @unique
   presentAddress         String
   permanentAddress       String
-  instituteName          String
   department             String
   semester               Int
-  registrationNo         String     @unique
-  rollNo                 String     @unique
-  gpa                    Float?
+  registrationNo         String           @unique
+  rollNo                 String           @unique
+  gpa                    Float?           @default(0.00)
   passingYear            Int?
   // ✅ Class 10 (SSC) Info
   classTenSchoolName     String
@@ -75,11 +84,12 @@ model DiplomaStudent {
   classTenRegistrationNo String
   classTenGPA            Float
   classTenExamYear       Int
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  classTest              ClassTest[]
+  semesterResult         SemesterResult[]
 
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  classTest      ClassTest[]
-  semesterResult SemesterResult[]
+  @@map("students")
 }
 
 model ClassTest {
@@ -90,25 +100,28 @@ model ClassTest {
   subject     String
   markNumber  Int
   earnNumber  Float
-  userId      String?
-  teacherId   String?
+  userId      String   @unique
+  teacherId   String   @unique
   createdAt   DateTime @default(now())
 
   user    DiplomaStudent? @relation(fields: [userId], references: [id])
   teacher DiplomaTeacher? @relation(fields: [teacherId], references: [id])
+
+  @@map("classTests")
 }
 
 model SemesterResult {
-  id          String          @id @default(uuid())
+  id          String   @id @default(uuid())
   studentName String
   semesterNo  Int
   totalMarks  Float
-  studentId   String?         // ✅ optional
-  createdAt   DateTime        @default(now())
+  studentId   String   @unique
+  createdAt   DateTime @default(now())
 
-  student     DiplomaStudent? @relation(fields: [studentId], references: [id]) // ✅ optional
+  student DiplomaStudent? @relation(fields: [studentId], references: [id])
+
+  @@map("results")
 }
-
 
 enum BloodGroup {
   A_POS

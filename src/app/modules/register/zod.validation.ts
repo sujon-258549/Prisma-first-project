@@ -64,7 +64,6 @@ export const diplomaStudentZodSchema = z.object({
         email: z.string().email(),
         presentAddress: z.string().min(1),
         permanentAddress: z.string().min(1),
-        instituteName: z.string().min(1),
         department: z.string().min(1),
         semester: z.number().int().min(1),
         registrationNo: z.string().min(1),

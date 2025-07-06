@@ -12,7 +12,7 @@ export const sendResponse = <T>(
     statusCode: number;
     success: boolean;
     message: string;
-    data?: T | undefined | null;
+    data: T | undefined | null;
     meta?: TMetaData;
   }
 ) => {
