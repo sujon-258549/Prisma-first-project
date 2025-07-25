@@ -12,7 +12,7 @@ model User {
   email          String          @unique
   password       String
   role           Role
-  isDelete Boolean @default(false)
+  isDelete       Boolean         @default(false)
   diplomaTeacher DiplomaTeacher?
 
   @@map("users")
@@ -47,34 +47,35 @@ model DiplomaTeacher {
   maritalStatus      MaritalStatus
   group              Group? // A, B, or C
 
-  photoUrl     String? // URI to photo
-  signatureUrl String? // URI to signature
-  isDeleted    Boolean     @default(false)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  classTest    ClassTest[]
-  user         User        @relation(fields: [email], references: [email])
+  photoUrl       String? // URI to photo
+  signatureUrl   String? // URI to signature
+  isDeleted      Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  classTest      ClassTest[]
+  user           User             @relation(fields: [email], references: [email])
+  AttendanceData AttendanceData[]
 
   @@map("teacher")
 }
 
 model DiplomaStudent {
-  id                     String           @id @default(uuid())
+  id                     String                  @id @default(uuid())
   name                   String
   fatherName             String
   motherName             String
   dateOfBirth            DateTime
   gender                 String
   bloodGroup             BloodGroup
-  phoneNumber            String           @unique
-  email                  String           @unique
+  phoneNumber            String                  @unique
+  email                  String                  @unique
   presentAddress         String
   permanentAddress       String
   department             String
   semester               Int
-  registrationNo         String           @unique
-  rollNo                 String           @unique
-  gpa                    Float?           @default(0.00)
+  registrationNo         String                  @unique
+  rollNo                 String                  @unique
+  gpa                    Float?                  @default(0.00)
   passingYear            Int?
   // ✅ Class 10 (SSC) Info
   classTenSchoolName     String
@@ -84,10 +85,11 @@ model DiplomaStudent {
   classTenRegistrationNo String
   classTenGPA            Float
   classTenExamYear       Int
-  createdAt              DateTime         @default(now())
-  updatedAt              DateTime         @updatedAt
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
   classTest              ClassTest[]
   semesterResult         SemesterResult[]
+  AttendanceStudentData  AttendanceStudentData[]
 
   @@map("students")
 }
@@ -121,6 +123,23 @@ model SemesterResult {
   student DiplomaStudent? @relation(fields: [studentId], references: [id])
 
   @@map("results")
+}
+
+model AttendanceData {
+  id        String                  @id @default(uuid())
+  teacherId String
+  teacher   DiplomaTeacher          @relation(fields: [teacherId], references: [id])
+  students  AttendanceStudentData[] // One-to-many relation
+  createdAt DateTime                @default(now())
+}
+
+model AttendanceStudentData {
+  id           String         @id @default(uuid())
+  attendanceId String
+  attendance   AttendanceData @relation(fields: [attendanceId], references: [id])
+  studentId    String
+  student      DiplomaStudent @relation(fields: [studentId], references: [id])
+  isAttended   Boolean        @default(false)
 }
 
 enum BloodGroup {
@@ -177,3 +196,4 @@ enum Gender {
   FEMALE
   OTHER
 }
+
