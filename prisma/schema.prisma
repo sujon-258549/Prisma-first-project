@@ -38,23 +38,22 @@ model DiplomaTeacher {
   designation Designation
   department  String
 
-  trainingCompleted  Boolean       @default(false)
+  trainingCompleted  Boolean          @default(false)
   teachingSubject    String?
   nidNumber          String?
   birthCertificateNo String?
   nationality        String
   religion           String
   maritalStatus      MaritalStatus
-  group              Group? // A, B, or C
-
-  photoUrl       String? // URI to photo
-  signatureUrl   String? // URI to signature
-  isDeleted      Boolean          @default(false)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  classTest      ClassTest[]
-  user           User             @relation(fields: [email], references: [email])
-  AttendanceData AttendanceData[]
+  needPasswordChange Boolean          @default(true)
+  photoUrl           String? // URI to photo
+  signatureUrl       String? // URI to signature
+  isDeleted          Boolean          @default(false)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  classTest          ClassTest[]
+  user               User             @relation(fields: [email], references: [email])
+  AttendanceData     AttendanceData[]
 
   @@map("teacher")
 }
@@ -196,4 +195,3 @@ enum Gender {
   FEMALE
   OTHER
 }
-
