@@ -59,36 +59,41 @@ model DiplomaTeacher {
 }
 
 model DiplomaStudent {
-  id                     String                  @id @default(uuid())
+  id                     String         @id @default(uuid())
   name                   String
   fatherName             String
   motherName             String
   dateOfBirth            DateTime
   gender                 String
-  bloodGroup             BloodGroup
-  phoneNumber            String                  @unique
-  email                  String                  @unique
+  bloodGroup             BloodGroup?
+  phoneNumber            String         @unique
+  email                  String         @unique
   presentAddress         String
   permanentAddress       String
-  department             String
-  semester               Int
-  registrationNo         String                  @unique
-  rollNo                 String                  @unique
-  gpa                    Float?                  @default(0.00)
+  department             Department
+  semester               Semester
+  registrationNo         String?        @unique
+  rollNo                 String?        @unique
+  gpa                    String?        @default("0.00")
+  regularStudent         Boolean        @default(true)
+  group                  EducationGroup
+  shift                  Shift
   passingYear            Int?
+  isEndEducation         Boolean        @default(false)
   // ✅ Class 10 (SSC) Info
   classTenSchoolName     String
   classTenBoard          String
   classTenGroup          String
   classTenRollNo         String
   classTenRegistrationNo String
-  classTenGPA            Float
+  classTenGPA            String
   classTenExamYear       Int
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
-  classTest              ClassTest[]
-  semesterResult         SemesterResult[]
-  AttendanceStudentData  AttendanceStudentData[]
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+
+  classTest             ClassTest[]
+  semesterResult        SemesterResult[]
+  AttendanceStudentData AttendanceStudentData[]
 
   @@map("students")
 }
@@ -194,4 +199,36 @@ enum Gender {
   MALE
   FEMALE
   OTHER
+}
+
+enum EducationGroup {
+  A_GROUP
+  B_GROUP
+}
+
+enum Shift {
+  Morning
+  Evening
+}
+
+enum Semester {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+  SIX
+  SEVEN
+  EIGHT
+  END
+}
+
+enum Department {
+  ELECTRONIC
+  ELECTROMADICAL
+  COMPUTER
+  POWER
+  MECHANICAL
+  ELECTRICAL
+  CIVIL
 }
