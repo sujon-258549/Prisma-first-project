@@ -207,8 +207,8 @@ enum EducationGroup {
 }
 
 enum Shift {
-  Morning
-  Evening
+  MORNING
+  EVENING
 }
 
 enum Semester {
