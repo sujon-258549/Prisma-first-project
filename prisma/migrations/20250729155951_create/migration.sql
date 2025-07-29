@@ -19,12 +19,25 @@ CREATE TYPE "Designation" AS ENUM ('LECTURER', 'INSTRUCTOR', 'SENIOR_INSTRUCTOR'
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 
+-- CreateEnum
+CREATE TYPE "EducationGroup" AS ENUM ('A_GROUP', 'B_GROUP');
+
+-- CreateEnum
+CREATE TYPE "Shift" AS ENUM ('MORNING', 'EVENING');
+
+-- CreateEnum
+CREATE TYPE "Semester" AS ENUM ('ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'END');
+
+-- CreateEnum
+CREATE TYPE "Department" AS ENUM ('ELECTRONIC', 'ELECTROMADICAL', 'COMPUTER', 'POWER', 'MECHANICAL', 'ELECTRICAL', 'CIVIL');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" "Role" NOT NULL,
+    "isDelete" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -37,27 +50,28 @@ CREATE TABLE "teacher" (
     "fatherName" TEXT NOT NULL,
     "motherName" TEXT NOT NULL,
     "gender" "Gender" NOT NULL,
-    "dateOfBirth" TIMESTAMP(3) NOT NULL,
+    "dateOfBirth" TEXT NOT NULL,
     "bloodGroup" "BloodGroup",
     "phoneNumber" TEXT NOT NULL,
     "emergencyContact" TEXT,
     "presentAddress" TEXT NOT NULL,
     "permanentAddress" TEXT NOT NULL,
     "teacherId" TEXT NOT NULL,
-    "status" "EmploymentStatus" NOT NULL,
-    "joiningDate" TIMESTAMP(3) NOT NULL,
+    "status" "EmploymentStatus" NOT NULL DEFAULT 'ACTIVE',
+    "joiningDate" TEXT NOT NULL,
     "designation" "Designation" NOT NULL,
     "department" TEXT NOT NULL,
-    "trainingCompleted" BOOLEAN NOT NULL,
+    "trainingCompleted" BOOLEAN NOT NULL DEFAULT false,
     "teachingSubject" TEXT,
     "nidNumber" TEXT,
     "birthCertificateNo" TEXT,
     "nationality" TEXT NOT NULL,
     "religion" TEXT NOT NULL,
     "maritalStatus" "MaritalStatus" NOT NULL,
-    "group" "Group",
+    "needPasswordChange" BOOLEAN NOT NULL DEFAULT true,
     "photoUrl" TEXT,
     "signatureUrl" TEXT,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -70,25 +84,33 @@ CREATE TABLE "students" (
     "name" TEXT NOT NULL,
     "fatherName" TEXT NOT NULL,
     "motherName" TEXT NOT NULL,
-    "dateOfBirth" TIMESTAMP(3) NOT NULL,
+    "dateOfBirth" TEXT NOT NULL,
     "gender" TEXT NOT NULL,
-    "bloodGroup" "BloodGroup" NOT NULL,
+    "bloodGroup" "BloodGroup",
     "phoneNumber" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "presentAddress" TEXT NOT NULL,
     "permanentAddress" TEXT NOT NULL,
-    "department" TEXT NOT NULL,
-    "semester" INTEGER NOT NULL,
-    "registrationNo" TEXT NOT NULL,
-    "rollNo" TEXT NOT NULL,
-    "gpa" DOUBLE PRECISION DEFAULT 0.00,
-    "passingYear" INTEGER,
+    "department" "Department" NOT NULL,
+    "semester" "Semester" NOT NULL,
+    "emergencyContact" TEXT,
+    "registrationNo" TEXT,
+    "rollNo" TEXT,
+    "cgpa" TEXT DEFAULT '0.00',
+    "regularStudent" BOOLEAN NOT NULL DEFAULT true,
+    "group" "EducationGroup" NOT NULL,
+    "shift" "Shift" NOT NULL,
+    "passingYear" INTEGER DEFAULT 0,
+    "nationality" TEXT NOT NULL,
+    "religion" TEXT NOT NULL,
+    "startEducationYear" INTEGER NOT NULL,
+    "photoUrl" TEXT,
     "classTenSchoolName" TEXT NOT NULL,
     "classTenBoard" TEXT NOT NULL,
     "classTenGroup" TEXT NOT NULL,
     "classTenRollNo" TEXT NOT NULL,
     "classTenRegistrationNo" TEXT NOT NULL,
-    "classTenGPA" DOUBLE PRECISION NOT NULL,
+    "classTenGPA" TEXT NOT NULL,
     "classTenExamYear" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -122,6 +144,25 @@ CREATE TABLE "results" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "results_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AttendanceData" (
+    "id" TEXT NOT NULL,
+    "teacherId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "AttendanceData_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AttendanceStudentData" (
+    "id" TEXT NOT NULL,
+    "attendanceId" TEXT NOT NULL,
+    "studentId" TEXT NOT NULL,
+    "isAttended" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "AttendanceStudentData_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -168,3 +209,12 @@ ALTER TABLE "classTests" ADD CONSTRAINT "classTests_teacherId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "results" ADD CONSTRAINT "results_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AttendanceData" ADD CONSTRAINT "AttendanceData_teacherId_fkey" FOREIGN KEY ("teacherId") REFERENCES "teacher"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AttendanceStudentData" ADD CONSTRAINT "AttendanceStudentData_attendanceId_fkey" FOREIGN KEY ("attendanceId") REFERENCES "AttendanceData"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AttendanceStudentData" ADD CONSTRAINT "AttendanceStudentData_studentId_fkey" FOREIGN KEY ("studentId") REFERENCES "students"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

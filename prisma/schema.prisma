@@ -25,7 +25,7 @@ model DiplomaTeacher {
   fatherName       String
   motherName       String
   gender           Gender
-  dateOfBirth      DateTime
+  dateOfBirth      String
   bloodGroup       BloodGroup?
   phoneNumber      String      @unique
   emergencyContact String?
@@ -34,9 +34,9 @@ model DiplomaTeacher {
 
   teacherId   String           @unique
   status      EmploymentStatus @default(ACTIVE)
-  joiningDate DateTime
+  joiningDate String
   designation Designation
-  department  String
+  department  Department
 
   trainingCompleted  Boolean          @default(false)
   teachingSubject    String?
@@ -59,27 +59,32 @@ model DiplomaTeacher {
 }
 
 model DiplomaStudent {
-  id                     String         @id @default(uuid())
-  name                   String
-  fatherName             String
-  motherName             String
-  dateOfBirth            DateTime
-  gender                 String
-  bloodGroup             BloodGroup?
-  phoneNumber            String         @unique
-  email                  String         @unique
-  presentAddress         String
-  permanentAddress       String
-  department             Department
-  semester               Semester
-  registrationNo         String?        @unique
-  rollNo                 String?        @unique
-  gpa                    String?        @default("0.00")
-  regularStudent         Boolean        @default(true)
-  group                  EducationGroup
-  shift                  Shift
-  passingYear            Int?
-  isEndEducation         Boolean        @default(false)
+  id               String         @id @default(uuid())
+  name             String
+  fatherName       String
+  motherName       String
+  dateOfBirth      String
+  gender           String
+  bloodGroup       BloodGroup?
+  phoneNumber      String         @unique
+  email            String         @unique
+  presentAddress   String
+  permanentAddress String
+  department       Department
+  semester         Semester
+  emergencyContact String?
+  registrationNo   String?        @unique
+  rollNo           String?        @unique
+  cgpa             String?        @default("0.00")
+  regularStudent   Boolean        @default(true)
+  group            EducationGroup
+  shift            Shift
+  passingYear      Int?           @default(0000)
+  nationality      String
+  religion         String
+
+  startEducationYear     Int
+  photoUrl               String?
   // ✅ Class 10 (SSC) Info
   classTenSchoolName     String
   classTenBoard          String
@@ -88,43 +93,40 @@ model DiplomaStudent {
   classTenRegistrationNo String
   classTenGPA            String
   classTenExamYear       Int
-  createdAt              DateTime       @default(now())
-  updatedAt              DateTime       @updatedAt
-
-  classTest             ClassTest[]
-  semesterResult        SemesterResult[]
-  AttendanceStudentData AttendanceStudentData[]
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  classTest              ClassTest[]
+  semesterResult         SemesterResult[]
+  AttendanceStudentData  AttendanceStudentData[]
 
   @@map("students")
 }
 
 model ClassTest {
-  id          String   @id @default(uuid())
+  id          String          @id @default(uuid())
   studentName String
   semesterNo  Int
   testNumber  Int
   subject     String
   markNumber  Int
   earnNumber  Float
-  userId      String   @unique
-  teacherId   String   @unique
-  createdAt   DateTime @default(now())
-
-  user    DiplomaStudent? @relation(fields: [userId], references: [id])
-  teacher DiplomaTeacher? @relation(fields: [teacherId], references: [id])
+  userId      String          @unique
+  teacherId   String          @unique
+  createdAt   DateTime        @default(now())
+  user        DiplomaStudent? @relation(fields: [userId], references: [id])
+  teacher     DiplomaTeacher? @relation(fields: [teacherId], references: [id])
 
   @@map("classTests")
 }
 
 model SemesterResult {
-  id          String   @id @default(uuid())
+  id          String          @id @default(uuid())
   studentName String
   semesterNo  Int
   totalMarks  Float
-  studentId   String   @unique
-  createdAt   DateTime @default(now())
-
-  student DiplomaStudent? @relation(fields: [studentId], references: [id])
+  studentId   String          @unique
+  createdAt   DateTime        @default(now())
+  student     DiplomaStudent? @relation(fields: [studentId], references: [id])
 
   @@map("results")
 }

@@ -4,6 +4,7 @@ import { TDiplomaStudent, TDiplomaTeacher } from "./register.interfaces";
 import prisma from "../../utility/prismaClient";
 
 const createTeacherIntoDB = async (payload: TDiplomaTeacher) => {
+  console.log(payload)
   const hashedPassword = await argon2.hash(payload.password);
   const userData = {
     email: payload.email,
@@ -42,8 +43,6 @@ const createTeacherIntoDB = async (payload: TDiplomaTeacher) => {
         nationality: payload.nationality,
         religion: payload.religion,
         maritalStatus: payload.maritalStatus,
-        group: payload.group,
-
         photoUrl: payload.photoUrl,
         signatureUrl: payload.signatureUrl,
       },

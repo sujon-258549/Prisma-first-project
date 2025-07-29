@@ -34,7 +34,7 @@ export interface TDiplomaStudent {
     fatherName: string;
     motherName: string;
     gender: "MALE" | "FEMALE" | "OTHER";
-    dateOfBirth: Date;
+    dateOfBirth: string;
     bloodGroup?: "A_POS" | "A_NEG" | "B_POS" | "B_NEG" | "AB_POS" | "AB_NEG" | "O_POS" | "O_NEG";
   
     phoneNumber: string;
@@ -48,7 +48,7 @@ export interface TDiplomaStudent {
     teacherId: string;
     role: "ADMIN" | "SUPPER_ADMIN" | "FACULTY" | "STUDENT";
     status: "ACTIVE" | "INACTIVE" | "ON_LEAVE" | "RETIRED" | "RESIGNED";
-    joiningDate: Date;
+    joiningDate: string;
     designation:
       | "LECTURER"
       | "INSTRUCTOR"
@@ -65,7 +65,6 @@ export interface TDiplomaStudent {
     nationality: string;
     religion: string;
     maritalStatus: "MARRIED" | "UNMARRIED" | "DIVORCED" | "WIDOWED";
-    group?: "A_GROUP" | "B_GROUP" | "C_GROUP" | "D_GROUP";
   
     photoUrl?: string;
     signatureUrl?: string;
