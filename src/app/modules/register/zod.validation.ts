@@ -52,7 +52,7 @@ export const diplomaStudentZodSchema = z.object({
         name: z.string().min(1),
         fatherName: z.string().min(1),
         motherName: z.string().min(1),
-        dateOfBirth: z.string().datetime().or(z.date()), // Date or ISO String
+        dateOfBirth: z.string(), // Date or ISO String
         gender: z.enum(["MALE", "FEMALE", "OTHER"]),
         bloodGroup: z.enum([
             "A_POS", "A_NEG",
@@ -65,7 +65,18 @@ export const diplomaStudentZodSchema = z.object({
         presentAddress: z.string().min(1),
         permanentAddress: z.string().min(1),
         department: z.string().min(1),
-        semester: z.number().int().min(1),
+        semester: z.enum([
+            "ONE",
+            "TWO",
+            "THREE",
+            "FOUR",
+            "FIVE",
+            "SIX",
+            "SEVEN",
+            "EIGHT",
+            "END"
+        ])
+        ,
         registrationNo: z.string().min(1),
         rollNo: z.string().min(1),
         gpa: z.number().min(0).max(4).optional(),
@@ -76,7 +87,7 @@ export const diplomaStudentZodSchema = z.object({
         classTenGroup: z.string().min(1),
         classTenRollNo: z.string().min(1),
         classTenRegistrationNo: z.string().min(1),
-        classTenGPA: z.number().min(0).max(5),
+        classTenGPA: z.string().min(0).max(5),
         classTenExamYear: z.number().int()
     })
 });

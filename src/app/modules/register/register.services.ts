@@ -1,6 +1,6 @@
 import { DiplomaStudent, DiplomaTeacher } from "@prisma/client";
 import * as argon2 from "argon2";
-import { TDiplomaStudent, TDiplomaTeacher } from "./register.interfaces";
+import {  TDiplomaTeacher } from "./register.interfaces";
 import prisma from "../../utility/prismaClient";
 
 const createTeacherIntoDB = async (payload: TDiplomaTeacher) => {
@@ -35,7 +35,6 @@ const createTeacherIntoDB = async (payload: TDiplomaTeacher) => {
         joiningDate: payload.joiningDate,
         designation: payload.designation,
         department: payload.department,
-
         trainingCompleted: payload.trainingCompleted, // ✅ Added
         teachingSubject: payload.teachingSubject,
         nidNumber: payload.nidNumber,
@@ -54,12 +53,13 @@ const createTeacherIntoDB = async (payload: TDiplomaTeacher) => {
   return result
 };
 const createStudentIntoDB = async (payload: DiplomaStudent) => {
+    console.log(payload)
   const result = await prisma.diplomaStudent.create({
     data: {
       ...payload
     }
   });
-  console.log(result)
+
   return result
 };
 

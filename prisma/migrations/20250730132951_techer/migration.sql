@@ -29,7 +29,7 @@ CREATE TYPE "Shift" AS ENUM ('MORNING', 'EVENING');
 CREATE TYPE "Semester" AS ENUM ('ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'END');
 
 -- CreateEnum
-CREATE TYPE "Department" AS ENUM ('ELECTRONIC', 'ELECTROMADICAL', 'COMPUTER', 'POWER', 'MECHANICAL', 'ELECTRICAL', 'CIVIL');
+CREATE TYPE "Department" AS ENUM ('ELECTRONIC', 'ELECTROMADICAL', 'COMPUTER', 'POWER', 'MECHANICAL', 'ELECTRICAL', 'CIVIL', 'NONE_TECH');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -60,7 +60,7 @@ CREATE TABLE "teacher" (
     "status" "EmploymentStatus" NOT NULL DEFAULT 'ACTIVE',
     "joiningDate" TEXT NOT NULL,
     "designation" "Designation" NOT NULL,
-    "department" TEXT NOT NULL,
+    "department" "Department" NOT NULL,
     "trainingCompleted" BOOLEAN NOT NULL DEFAULT false,
     "teachingSubject" TEXT,
     "nidNumber" TEXT,
@@ -85,7 +85,7 @@ CREATE TABLE "students" (
     "fatherName" TEXT NOT NULL,
     "motherName" TEXT NOT NULL,
     "dateOfBirth" TEXT NOT NULL,
-    "gender" TEXT NOT NULL,
+    "gender" "Gender" NOT NULL,
     "bloodGroup" "BloodGroup",
     "phoneNumber" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE "students" (
     "classTenRollNo" TEXT NOT NULL,
     "classTenRegistrationNo" TEXT NOT NULL,
     "classTenGPA" TEXT NOT NULL,
-    "classTenExamYear" INTEGER NOT NULL,
+    "classTenPassingYear" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

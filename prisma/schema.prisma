@@ -64,7 +64,7 @@ model DiplomaStudent {
   fatherName       String
   motherName       String
   dateOfBirth      String
-  gender           String
+  gender           Gender
   bloodGroup       BloodGroup?
   phoneNumber      String         @unique
   email            String         @unique
@@ -92,7 +92,7 @@ model DiplomaStudent {
   classTenRollNo         String
   classTenRegistrationNo String
   classTenGPA            String
-  classTenExamYear       Int
+  classTenPassingYear       Int
   createdAt              DateTime                @default(now())
   updatedAt              DateTime                @updatedAt
   classTest              ClassTest[]
@@ -233,4 +233,5 @@ enum Department {
   MECHANICAL
   ELECTRICAL
   CIVIL
+  NONE_TECH
 }
