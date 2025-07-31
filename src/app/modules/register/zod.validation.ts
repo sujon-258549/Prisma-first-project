@@ -80,7 +80,7 @@ export const diplomaStudentZodSchema = z.object({
         registrationNo: z.string().min(1),
         rollNo: z.string().min(1),
         gpa: z.number().min(0).max(4).optional(),
-        passingYear: z.number().int().optional(),
+        passingYear: z.number().optional(),
 
         classTenSchoolName: z.string().min(1),
         classTenBoard: z.string().min(1),
@@ -88,7 +88,7 @@ export const diplomaStudentZodSchema = z.object({
         classTenRollNo: z.string().min(1),
         classTenRegistrationNo: z.string().min(1),
         classTenGPA: z.string().min(0).max(5),
-        classTenExamYear: z.number().int()
+        classTenPassingYear: z.number().int()
     })
 });
 
