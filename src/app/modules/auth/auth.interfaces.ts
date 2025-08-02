@@ -19,7 +19,6 @@ export interface TDiplomaStudent {
     rollNo: string;
     gpa?: number;
     passingYear?: number;
-  
     classTenSchoolName: string;
     classTenBoard: string;
     classTenGroup: string;
@@ -36,15 +35,12 @@ export interface TDiplomaStudent {
     gender: "MALE" | "FEMALE" | "OTHER";
     dateOfBirth: Date;
     bloodGroup?: "A_POS" | "A_NEG" | "B_POS" | "B_NEG" | "AB_POS" | "AB_NEG" | "O_POS" | "O_NEG";
-  
     phoneNumber: string;
     email: string;
     password: string;
     emergencyContact?: string;
-  
     presentAddress: string;
     permanentAddress: string;
-  
     teacherId: string;
     role: "ADMIN" | "SUPPER_ADMIN" | "FACULTY" | "STUDENT";
     status: "ACTIVE" | "INACTIVE" | "ON_LEAVE" | "RETIRED" | "RESIGNED";
@@ -57,7 +53,6 @@ export interface TDiplomaStudent {
       | "VICE_PRINCIPAL"
       | "PRINCIPAL";
     department: string;
-  
     trainingCompleted: boolean;
     teachingSubject?: string;
     nidNumber?: string;
@@ -66,7 +61,6 @@ export interface TDiplomaStudent {
     religion: string;
     maritalStatus: "MARRIED" | "UNMARRIED" | "DIVORCED" | "WIDOWED";
     group?: "A_GROUP" | "B_GROUP" | "C_GROUP" | "D_GROUP";
-  
     photoUrl?: string;
     signatureUrl?: string;
   }

@@ -27,5 +27,4 @@ const loginUser = async (payload: any) => {
 
 export const AuthServices = {
   loginUser,
-
 };
