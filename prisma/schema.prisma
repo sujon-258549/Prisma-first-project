@@ -92,7 +92,7 @@ model DiplomaStudent {
   classTenRollNo         String
   classTenRegistrationNo String
   classTenGPA            String
-  classTenPassingYear       Int
+  classTenPassingYear    Int
   createdAt              DateTime                @default(now())
   updatedAt              DateTime                @updatedAt
   classTest              ClassTest[]
@@ -133,6 +133,7 @@ model SemesterResult {
 
 model AttendanceData {
   id        String                  @id @default(uuid())
+  subject   String
   teacherId String
   teacher   DiplomaTeacher          @relation(fields: [teacherId], references: [id])
   students  AttendanceStudentData[] // One-to-many relation
