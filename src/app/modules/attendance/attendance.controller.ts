@@ -8,7 +8,7 @@ const attendanceIn = catchAsync(async (req: Request, res: Response) => {
     sendResponse(res, {
         statusCode: httpsStatus.CREATED,
         success: true,
-        message: "Teacher create Successfully",
+        message: "Attendance create Successfully",
         data: result,
     });
 });
