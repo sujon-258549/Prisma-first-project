@@ -34,6 +34,7 @@ const createTeacherIntoDB = async (payload: TDiplomaTeacher) => {
         status: payload.status,
         joiningDate: payload.joiningDate,
         designation: payload.designation,
+        // @ts-expect-error
         department: payload.department,
         trainingCompleted: payload.trainingCompleted, // ✅ Added
         teachingSubject: payload.teachingSubject,
