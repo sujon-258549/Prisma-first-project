@@ -149,6 +149,11 @@ CREATE TABLE "results" (
 -- CreateTable
 CREATE TABLE "AttendanceData" (
     "id" TEXT NOT NULL,
+    "subject" TEXT NOT NULL,
+    "group" "Group" NOT NULL,
+    "semester" "Semester" NOT NULL,
+    "shiftName" "Shift" NOT NULL,
+    "departmentName" "Department" NOT NULL,
     "teacherId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

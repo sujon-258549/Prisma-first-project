@@ -132,12 +132,16 @@ model SemesterResult {
 }
 
 model AttendanceData {
-  id        String                  @id @default(uuid())
-  subject   String
-  teacherId String
-  teacher   DiplomaTeacher          @relation(fields: [teacherId], references: [id])
-  students  AttendanceStudentData[] // One-to-many relation
-  createdAt DateTime                @default(now())
+  id             String                  @id @default(uuid())
+  subject        String
+  group          Group
+  semester       Semester
+  shiftName      Shift
+  departmentName Department
+  teacherId      String
+  teacher        DiplomaTeacher          @relation(fields: [teacherId], references: [id])
+  students       AttendanceStudentData[] // One-to-many relation
+  createdAt      DateTime                @default(now())
 }
 
 model AttendanceStudentData {

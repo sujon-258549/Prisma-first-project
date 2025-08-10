@@ -4,6 +4,10 @@ const attendanceServicesIntoDB = async (payload: any) => {
     console.log(payload)
     const result = await prisma.attendanceData.create({
         data: {
+            group: payload.group,
+            semester: payload.semester,
+            shiftName: payload.shift,
+            departmentName: payload.departmentName,
             subject: payload.subject,
             teacher: {
                 connect: { id: payload.teacherId }  // Connect existing teacher by ID
