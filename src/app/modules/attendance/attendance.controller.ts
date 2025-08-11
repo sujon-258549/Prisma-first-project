@@ -12,5 +12,14 @@ const attendanceIn = catchAsync(async (req: Request, res: Response) => {
         data: result,
     });
 });
+const getAttendance = catchAsync(async (req: Request, res: Response) => {
+    const result = await attendancesServices.getAttendance();
+    sendResponse(res, {
+        statusCode: httpsStatus.OK,
+        success: true,
+        message: "Attendance retrieved Successfully",
+        data: result,
+    });
+});
 
-export const attendanceController = { attendanceIn }
+export const attendanceController = { attendanceIn , getAttendance}

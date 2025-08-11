@@ -24,5 +24,23 @@ const attendanceServicesIntoDB = async (payload: any) => {
     return result
 }
 
+const getAttendance = async () => {
+    const result = await prisma.attendanceData.findMany({
+        include: {
+            students: {
+                include: {
+                    student: true
+                }
+            },
+            teacher: true
+        },
+        orderBy: {
+            createdAt: 'asc'  // or 'asc' for oldest first
+        }
+    });
+    return result;
+};
 
-export const attendancesServices = { attendanceServicesIntoDB }
+
+
+export const attendancesServices = { attendanceServicesIntoDB, getAttendance }
