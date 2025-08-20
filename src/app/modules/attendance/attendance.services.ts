@@ -32,7 +32,7 @@ const getAttendance = async () => {
                     student: true
                 }
             },
-            teacher: true //FormDescription
+            teacher: true 
         },
         orderBy: {
             createdAt: 'asc'  // or 'asc' for oldest first
