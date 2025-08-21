@@ -1,10 +1,17 @@
 import prisma from "../../utility/prismaClient"
 
 
-const studentIntoDB = async()=>{
-    const result = await prisma.diplomaStudent.findMany()
+const studentIntoDB = async (query: any) => {
+    console.log(query)
+    const result = await prisma.diplomaStudent.findMany({
+        where: {
+            name: {
+                contains: query.searchTerm
+            }
+        }
+    })
     return result
 }
 
 
-export const studentServices = {studentIntoDB}
+export const studentServices = { studentIntoDB }
