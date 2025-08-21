@@ -1,17 +1,40 @@
+
 import prisma from "../../utility/prismaClient"
+import { search } from "../utils/search";
+
 
 
 const studentIntoDB = async (query: any) => {
     console.log(query)
+    const searchableFields = ["name",
+        "fatherName",
+        "motherName",
+        "email",
+        "phoneNumber",
+        "presentAddress",
+        "permanentAddress",
+        "emergencyContact",
+        "registrationNo",
+        "rollNo",
+        "nationality",
+        "religion",
+        "classTenSchoolName",
+        "classTenBoard",
+        "classTenGroup",
+        "classTenRollNo",
+        "classTenRegistrationNo",
+        "photoUrl"
+    ];
+    const whereCondition = search(query, searchableFields)
+
+
+
     const result = await prisma.diplomaStudent.findMany({
-        where: {
-            name: {
-                contains: query.searchTerm
-            }
-        }
+        where: whereCondition
     })
     return result
 }
+
 
 
 export const studentServices = { studentIntoDB }
