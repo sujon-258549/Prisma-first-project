@@ -25,7 +25,7 @@ const studentIntoDB = async (query: any) => {
         "classTenRegistrationNo",
         "photoUrl"
     ];
-    const whereCondition = search(query, searchableFields)
+    const whereCondition = search(query, searchableFields) // search work
 
 
 
