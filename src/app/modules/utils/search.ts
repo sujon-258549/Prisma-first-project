@@ -1,6 +1,9 @@
 // Search function
 
-export const search = (query: { searchTerm: any }, searchableFields: string[]) => {
+export const search = (
+    query: { searchTerm: any } & { [key: string]: any },
+    searchableFields: string[]
+) => {
     const { searchTerm, ...filterData } = query
     const andCondition: any[] = [];
 
