@@ -5,7 +5,7 @@ import { search } from "../utils/search";
 
 
 const studentIntoDB = async (query: any) => {
-    console.log(query)
+   
     const searchableFields = ["name",
         "fatherName",
         "motherName",
@@ -26,7 +26,6 @@ const studentIntoDB = async (query: any) => {
         "photoUrl"
     ];
     const whereCondition = search(query, searchableFields) // search work
-
 
 
     const result = await prisma.diplomaStudent.findMany({
