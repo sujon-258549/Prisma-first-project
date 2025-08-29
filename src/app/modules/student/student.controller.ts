@@ -4,21 +4,14 @@ import { studentServices } from "./student.servoces";
 import { sendResponse } from "../../utility/sendResponse";
 
 import HttpStatus from "http-status";
+import { pickFunction } from "../utils/pick";
 
-const pickFunction = (obj : any, keys : string[]) : any => {
-    const finalObject: Record<string, any> = {};
 
-    for (const key of keys) {
-        if (obj && Object.prototype.hasOwnProperty.call(obj, key)) {
-            finalObject[key] = obj[key];
-        }
-    }
-  return finalObject
-};
 
 const getStudent = catchAsync(async (req: Request, res: Response) => {
 
-    const queryParams = pickFunction(req.query, ['searchTerm', "email"])
+    const search = ['searchTerm', "email", "name", "limit", "page"]
+    const queryParams = pickFunction(req.query, search)
     const result = await studentServices.studentIntoDB(queryParams)
     sendResponse(res, {
         statusCode: HttpStatus.OK,
