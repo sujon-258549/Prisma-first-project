@@ -2,11 +2,11 @@
 
 export const search = (
     query: { searchTerm: any } & { [key: string]: any },
-    searchableFields: string[]
+    searchableFields: string[],
 ) => {
     const { searchTerm, ...filterData } = query
     const andCondition: any[] = [];
-
+  
     if (searchTerm) {
         andCondition.push({
             OR: searchableFields.map((field: string) => ({

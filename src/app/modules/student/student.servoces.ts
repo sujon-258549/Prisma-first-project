@@ -1,11 +1,12 @@
 
 import prisma from "../../utility/prismaClient"
+import { paginationAndSort } from "../utils/paginationAndSort";
 import { search } from "../utils/search";
 
 
 
-const studentIntoDB = async (query: any) => {
-   
+const studentIntoDB = async (query: any, options: any) => {
+
     const searchableFields = ["name",
         "fatherName",
         "motherName",
@@ -26,11 +27,20 @@ const studentIntoDB = async (query: any) => {
         "photoUrl"
     ];
     const whereCondition = search(query, searchableFields) // search work
+    const { limit, page, sortBy, sortOrder } = options
 
-
+  
+    const pagination = paginationAndSort(page, limit, sortBy, sortOrder);
     const result = await prisma.diplomaStudent.findMany({
-        where: whereCondition
+        where: whereCondition || {},
+        skip: pagination.skip,
+
+        orderBy: {
+            [pagination.sortBy]: pagination.sortOrder
+        }
+
     })
+
     return result
 }
 

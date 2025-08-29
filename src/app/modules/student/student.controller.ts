@@ -10,9 +10,11 @@ import { pickFunction } from "../utils/pick";
 
 const getStudent = catchAsync(async (req: Request, res: Response) => {
 
-    const search = ['searchTerm', "email", "name", "limit", "page"]
-    const queryParams = pickFunction(req.query, search)
-    const result = await studentServices.studentIntoDB(queryParams)
+    // const search = 
+    const queryParams = pickFunction(req?.query, ['searchTerm', "email", "name"])
+    const options = pickFunction(req.query, ["limit", "page", "sortBy", "sortOrder"])
+
+    const result = await studentServices.studentIntoDB(queryParams, options)
     sendResponse(res, {
         statusCode: HttpStatus.OK,
         success: true,
